@@ -74,29 +74,30 @@ h3 { font-size: 1.5rem; }
 /* Checklist Items */
 .checklist-item {
     display: flex;
-    align-items: flex-start;
-    margin-bottom: 1rem;
-    padding: 0.75rem;
-    border-radius: 4px;
-    transition: background-color 0.2s ease;
-}
-
-.checklist-item:hover {
-    background-color: var(--hover-color);
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
 }
 
 .checklist-item input[type="checkbox"] {
-    margin-right: 1rem;
-    margin-top: 0.3rem;
-    width: 18px;
-    height: 18px;
-    cursor: pointer;
+    margin: 0;
+    width: 16px;
+    height: 16px;
 }
 
 .checklist-item label {
-    flex: 1;
-    cursor: pointer;
-    font-size: 1rem;
+    margin: 0;
+}
+
+.training-hours-input {
+    width: 60px;
+    height: 25px;
+    padding: 2px 5px;
+    margin: 0 4px;
+}
+
+.checklist-item span {
+    white-space: nowrap;
 }
 
 /* Important Notes Section */
@@ -145,74 +146,175 @@ span[lang="en"], span[lang="th"] {
     display: inline-block; /* Default display for inline elements */
 }
 
-/* Language Selector Styles */
+/* Navbar styles */
+.navbar {
+    background-color: white;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+.nav-logo {
+    height: 50px;
+    display: flex;
+    align-items: center;
+}
+
+.company-logo {
+    height: 40px;
+    width: auto;
+    object-fit: contain;
+}
+
 .language-selector {
     display: flex;
     align-items: center;
     gap: 10px;
-    margin-bottom: 20px;
 }
 
 .language-btn {
     padding: 8px 16px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    border: 1px solid #ddd;
     background: white;
+    border-radius: 4px;
     cursor: pointer;
-    transition: all 0.3s ease;
     font-size: 14px;
-}
-
-.language-btn.active {
-    background: #007bff;
-    color: white;
-    border-color: #0056b3;
+    transition: all 0.2s;
 }
 
 .language-btn:hover {
-    background: #f0f0f0;
+    background-color: var(--hover-color);
 }
 
-.language-btn.active:hover {
-    background: #0056b3;
+.language-btn.active {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
 }
 
 .print-btn {
-    margin-left: auto;
     padding: 8px 16px;
-    background: #28a745;
+    background-color: var(--primary-color);
     color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    font-size: 14px;
+    transition: all 0.2s;
 }
 
 .print-btn:hover {
-    background: #218838;
+    background-color: #0056b3;
 }
 
-/* Print Styles */
+/* Content layout */
+.content-wrapper {
+    margin-top: 80px;
+    padding: 20px;
+}
+
+.page-title {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.page-title h1 {
+    font-size: 24px;
+    color: var(--primary-color);
+    margin: 0;
+}
+
+/* Header section styles */
+.header-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    padding: 20px;
+}
+
+.left-section {
+    flex: 1;
+}
+
+.header-logo {
+    height: 60px;
+    width: auto;
+}
+
+.right-section {
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.doc-info {
+    margin-bottom: 10px;
+}
+
+.doc-info p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.qr-code img {
+    height: 80px;
+    width: auto;
+}
+
+/* Print styles */
 @media print {
-    body {
-        padding: 0;
-        background: white;
+    @page {
+        size: A4;
+        margin: 10mm;
     }
 
+    body {
+        margin: 0;
+        padding: 0;
+    }
+
+    .navbar {
+        display: none !important;
+    }
+
+    .content-wrapper {
+        padding: 0;
+        margin: 0;
+    }
+
+    /* Keep sections together */
     .form-section {
-        box-shadow: none;
-        border: 1px solid #ddd;
-        page-break-inside: avoid;
+        break-inside: avoid;
     }
 
     .checklist-group {
         break-inside: avoid;
     }
 
-    .important-notes {
+    .checklist-item {
         break-inside: avoid;
-        background-color: white;
-        border: 1px solid #ddd;
+    }
+
+    /* Ensure checkboxes print */
+    input[type="checkbox"] {
+        -webkit-print-color-adjust: exact;
+        color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    /* Hide print button */
+    .print-btn {
+        display: none !important;
     }
 }
 
@@ -250,7 +352,11 @@ button:hover, input[type="submit"]:hover {
     background-color: #004494;
 }
 
-input[type="text"], input[type="number"], textarea {
+input[type="text"], 
+input[type="number"],
+input[type="email"],
+input[type="date"],
+textarea {
     width: 100%;
     padding: 0.5rem;
     border: 1px solid var(--border-color);
@@ -550,44 +656,60 @@ textarea {
     border: 0;
 }
 
-/* Print-specific styles */
+/* Training hours styling */
+.training-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+}
+
+.training-group input[type="number"] {
+    width: 60px;
+    margin: 0;
+    height: 25px;
+    padding: 2px 5px;
+}
+
+.training-group span {
+    margin-left: -5px;
+}
+
+/* Header and Logo styles */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding: 20px 0;
+}
+
+.company-logo {
+    height: 80px;
+    width: auto;
+    object-fit: contain;
+}
+
+.page-title {
+    flex-grow: 1;
+    text-align: center;
+}
+
+/* Print styles for logo */
 @media print {
-    [lang="en"] {
-        display: block !important;
-    }
-    
-    [lang="th"] {
-        display: none !important;
-    }
-    
-    .language-selector {
-        display: none !important;
-    }
-    
-    .page-break-before {
-        page-break-before: always;
-    }
-    
-    body {
-        background-color: white;
-    }
-    
-    .form-section {
-        box-shadow: none;
-        border: 1px solid #ddd;
+    .header {
+        margin-bottom: 15mm;
     }
 
-    /* Remove text boxes in print mode */
-    input[type="text"],
-    input[type="number"],
-    input[type="email"],
-    input[type="tel"],
-    input[type="date"],
-    textarea {
-        border: none;
-        background: none;
-        -webkit-appearance: none;
-        appearance: none;
+    .company-logo {
+        height: 60px;
+        width: auto;
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+    }
+
+    .page-title {
+        margin-left: 10mm;
     }
 }
 
@@ -628,4 +750,29 @@ textarea {
 .language-btn.active {
     background-color: var(--primary-color);
     color: white;
+}
+
+/* Hide Google elements */
+#google_translate_element,
+.goog-te-banner-frame,
+.skiptranslate {
+    display: none !important;
+    visibility: hidden !important;
+}
+
+/* Remove Google Translate top margin */
+body {
+    top: 0 !important;
+    position: static !important;
+}
+
+/* Hide Google Translate popup */
+.goog-tooltip,
+.goog-tooltip:hover {
+    display: none !important;
+}
+.goog-text-highlight {
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
 }

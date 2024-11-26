@@ -1,13 +1,24 @@
 function generatePDF() {
-    const element = document.body;
+    const element = document.querySelector('.content-wrapper');
+    
     const opt = {
-        margin: 10,
         filename: 'pump-service-checklist.pdf',
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2 },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        margin: [10, 10, 10, 10],
+        image: { type: 'jpeg', quality: 1 },
+        html2canvas: {
+            scale: 2,
+            useCORS: true,
+            scrollY: 0,
+            letterRendering: true
+        },
+        jsPDF: {
+            unit: 'mm',
+            format: 'a4',
+            orientation: 'portrait',
+            putOnlyUsedFonts: true
+        },
+        pagebreak: { mode: 'avoid-all' }
     };
 
-    // Generate PDF
-    html2pdf().set(opt).from(element).save();
+    html2pdf().from(element).set(opt).save();
 }

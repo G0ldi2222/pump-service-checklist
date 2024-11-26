@@ -1,7 +1,5 @@
 <!-- Customer Preparation Checklist Section -->
-<div class="form-section page-break-before">
-    <h2 data-translate>4. Customer Preparation Checklist</h2>
-    
+<div class="form-section">
     <form id="preparation-checklist" autocomplete="on">
         <div class="checklist-group">
             <h3 data-translate>Pre-Service Requirements</h3>
@@ -14,8 +12,8 @@
             <div class="checklist-item">
                 <input type="checkbox" id="documentation" name="documentation" autocomplete="off">
                 <label for="documentation" data-translate>Safety Training required?</label>
-                <label for="training_hours" class="sr-only">Training hours</label>
-                <input type="number" id="training_hours" name="training_hours" step="0.5" min="0" autocomplete="off" aria-label="Training hours">
+                <input type="number" id="training_hours" name="training_hours" step="0.5" min="0" autocomplete="off" class="training-hours-input" aria-label="Training hours">
+                <span data-translate>hours</span>
             </div>
             
             <div class="checklist-item">

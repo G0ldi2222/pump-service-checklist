@@ -3,16 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Pump Service Checklist - Part 1 External</title>
+    <title>Pump Service Checklist</title>
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script src="pdf-generator.js"></script>
     <script src="language-switcher.js"></script>
-    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </head>
 <body>
-    <div class="top-controls">
+    <div class="navbar">
         <div class="language-selector">
             <div id="google_translate_element"></div>
             <button id="en-btn" class="language-btn active" onclick="changeLanguage('en')" aria-label="Switch to English">English</button>
@@ -22,25 +20,18 @@
     </div>
 
     <div class="content-wrapper">
-        <div class="header">
+        <div class="header-section">
             <div class="left-section">
                 <div class="logo-container">
-                    <img src="Water-Field-Asia-Logo.jpg" alt="Water Field Asia Logo">
-                </div>
-                <div class="company-info">
-                    <h1 data-translate>Water Field Asia Co., Ltd.</h1>
-                    <p data-translate>623 Soi Onnut 70/1 Sub 2<br>
-                    Pravet Sub-District, Pravet District,<br>
-                    Bangkok 10250</p>
-                    <p data-translate>Tel.: +66 2320 1994</p>
+                    <img src="Water-Field-Asia-Logo.png" alt="Water Field Asia Logo" class="header-logo">
                 </div>
             </div>
             
             <div class="right-section">
                 <div class="doc-info">
-                    Document No: FM-WFA-SER-057<br>
+                    <p>Document No: FM-WFA-SER-057<br>
                     Revision: 00<br>
-                    Date: <span id="currentDate"></span>
+                    Date: <span id="currentDate"></span></p>
                 </div>
                 <div class="qr-code">
                     <img src="QR-Code.jpg" alt="QR Code">
@@ -49,53 +40,61 @@
         </div>
 
         <div class="page-title">
-            <h2 data-translate>PUMP SERVICE CHECKLIST - Part 1</h2>
+            <h1 data-translate>PUMP SERVICE CHECKLIST - Part 1</h1>
         </div>
 
-        <form id="pump-service-form">
-            <!-- Include modular sections -->
-            <div id="customer-info"></div>
-            <div id="pump-info"></div>
-            <div id="operating-conditions"></div>
-            <div id="customer-preparation"></div>
-        </form>
+        <div class="sections-container">
+            <section class="form-section" id="customer-info-section">
+                <h2 data-translate>1. Customer Information</h2>
+                <div id="customer-info-content"></div>
+            </section>
+
+            <section class="form-section" id="pump-info-section">
+                <h2 data-translate>2. Pump Information</h2>
+                <div id="pump-info-content"></div>
+            </section>
+
+            <section class="form-section" id="operating-conditions-section">
+                <h2 data-translate>3. Operating Conditions</h2>
+                <div id="operating-conditions-content"></div>
+            </section>
+
+            <section class="form-section" id="customer-preparation-section">
+                <h2 data-translate>4. Customer Preparation Checklist</h2>
+                <div id="customer-preparation-content"></div>
+            </section>
+        </div>
     </div>
 
     <script>
+        // Set current date
+        const currentDate = new Date().toLocaleDateString();
+        document.getElementById('currentDate').textContent = currentDate;
+
         // Load modular sections
         fetch('customer-info.html')
             .then(response => response.text())
             .then(data => {
-                document.getElementById('customer-info').innerHTML = data;
+                document.getElementById('customer-info-content').innerHTML = data;
             });
 
         fetch('pump-info.html')
             .then(response => response.text())
             .then(data => {
-                document.getElementById('pump-info').innerHTML = data;
+                document.getElementById('pump-info-content').innerHTML = data;
             });
 
         fetch('operating-conditions.html')
             .then(response => response.text())
             .then(data => {
-                document.getElementById('operating-conditions').innerHTML = data;
+                document.getElementById('operating-conditions-content').innerHTML = data;
             });
 
         fetch('customer-preparation.html')
             .then(response => response.text())
             .then(data => {
-                document.getElementById('customer-preparation').innerHTML = data;
+                document.getElementById('customer-preparation-content').innerHTML = data;
             });
-
-        // Set current date
-        const currentDate = new Date().toLocaleDateString();
-        document.getElementById('currentDate').textContent = currentDate;
-
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({
-                pageLanguage: 'en'
-            }, 'google_translate_element');
-        }
     </script>
 </body>
 </html>
