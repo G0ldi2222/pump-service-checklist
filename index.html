@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Pump Service Checklist - Part 1 External</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="pdf-generator.js"></script>
+    <script src="language-switcher.js"></script>
+</head>
+<body>
+    <div class="language-selector">
+        <button class="language-btn active" onclick="changeLanguage('en')" id="en-btn">English</button>
+        <button class="language-btn" onclick="changeLanguage('th')" id="th-btn">ไทย</button>
+        <button class="print-btn" onclick="generatePDF()">Generate PDF</button>
+    </div>
+
+    <div class="header">
+        <div class="left-section">
+            <div class="logo-container">
+                <img src="logo.png" alt="Water Field Asia Logo">
+            </div>
+            <div class="company-info">
+                <h1 lang="en">Water Field Asia Co., Ltd.</h1>
+                <h1 lang="th">บริษัท วอเตอร์ฟิลด์เอเซีย จำกัด</h1>
+                
+                <p lang="en">623 Soi Onnut 70/1 Sub 2<br>
+                Pravet Sub-District, Pravet District,<br>
+                Bangkok 10250</p>
+                
+                <p lang="th">623 ซอยอ่อนนุช 70/1 แยก 2<br>
+                แขวงประเวศ เขตประเวศ<br>
+                กรุงเทพมหานคร 10250</p>
+                
+                <p lang="en">Tel.: +66 2320 1994</p>
+                <p lang="th">โทร.: +66 2320 1994</p>
+            </div>
+        </div>
+        
+        <div class="right-section">
+            <div class="doc-info">
+                Document No: FM-WFA-SER-057<br>
+                Revision: 00<br>
+                Date: <span id="currentDate"></span>
+            </div>
+            <div class="qr-code">
+                <img src="qr-code.png" alt="QR Code">
+            </div>
+        </div>
+    </div>
+
+    <div class="page-title">
+        <h2 lang="en">PUMP SERVICE CHECKLIST - Part 1</h2>
+        <h2 lang="th">รายการตรวจสอบการซ่อมบำรุงปั๊ม - ส่วนที่ 1</h2>
+    </div>
+
+    <form id="pump-service-form">
+        <!-- Include modular sections -->
+        <div id="customer-info"></div>
+        <div id="pump-info"></div>
+        <div id="operating-conditions"></div>
+        <div id="customer-preparation"></div>
+    </form>
+
+    <script>
+        // Load modular sections
+        fetch('customer-info.html')
+            .then(response => response.text())
+            .then(html => document.getElementById('customer-info').innerHTML = html);
+            
+        fetch('pump-info.html')
+            .then(response => response.text())
+            .then(html => document.getElementById('pump-info').innerHTML = html);
+            
+        fetch('operating-conditions.html')
+            .then(response => response.text())
+            .then(html => document.getElementById('operating-conditions').innerHTML = html);
+            
+        fetch('customer-preparation.html')
+            .then(response => response.text())
+            .then(html => document.getElementById('customer-preparation').innerHTML = html);
+
+        // Set current date
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('currentDate').textContent = new Date().toLocaleDateString();
+            changeLanguage('en'); // Set default language
+        });
+    </script>
+</body>
+</html>
