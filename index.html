@@ -3,89 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Pump Service Checklist - Part 1 External</title>
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script src="pdf-generator.js"></script>
     <script src="language-switcher.js"></script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </head>
 <body>
-    <div class="language-selector">
-        <button class="language-btn active" onclick="changeLanguage('en')" id="en-btn">English</button>
-        <button class="language-btn" onclick="changeLanguage('th')" id="th-btn">ไทย</button>
-        <button class="print-btn" onclick="generatePDF()">Generate PDF</button>
-    </div>
-
-    <div class="header">
-        <div class="left-section">
-            <div class="logo-container">
-                <img src="logo.png" alt="Water Field Asia Logo">
-            </div>
-            <div class="company-info">
-                <h1 lang="en">Water Field Asia Co., Ltd.</h1>
-                <h1 lang="th">บริษัท วอเตอร์ฟิลด์เอเซีย จำกัด</h1>
-                
-                <p lang="en">623 Soi Onnut 70/1 Sub 2<br>
-                Pravet Sub-District, Pravet District,<br>
-                Bangkok 10250</p>
-                
-                <p lang="th">623 ซอยอ่อนนุช 70/1 แยก 2<br>
-                แขวงประเวศ เขตประเวศ<br>
-                กรุงเทพมหานคร 10250</p>
-                
-                <p lang="en">Tel.: +66 2320 1994</p>
-                <p lang="th">โทร.: +66 2320 1994</p>
-            </div>
-        </div>
-        
-        <div class="right-section">
-            <div class="doc-info">
-                Document No: FM-WFA-SER-057<br>
-                Revision: 00<br>
-                Date: <span id="currentDate"></span>
-            </div>
-            <div class="qr-code">
-                <img src="qr-code.png" alt="QR Code">
-            </div>
+    <div class="top-controls">
+        <div class="language-selector">
+            <div id="google_translate_element"></div>
+            <button id="en-btn" class="language-btn active" onclick="changeLanguage('en')" aria-label="Switch to English">English</button>
+            <button id="th-btn" class="language-btn" onclick="changeLanguage('th')" aria-label="Switch to Thai">ไทย</button>
+            <button type="button" class="print-btn" onclick="generatePDF()" aria-label="Generate PDF">Generate PDF</button>
         </div>
     </div>
 
-    <div class="page-title">
-        <h2 lang="en">PUMP SERVICE CHECKLIST - Part 1</h2>
-        <h2 lang="th">รายการตรวจสอบการซ่อมบำรุงปั๊ม - ส่วนที่ 1</h2>
-    </div>
+    <div class="content-wrapper">
+        <div class="header">
+            <div class="left-section">
+                <div class="logo-container">
+                    <img src="Water-Field-Asia-Logo.jpg" alt="Water Field Asia Logo">
+                </div>
+                <div class="company-info">
+                    <h1 data-translate>Water Field Asia Co., Ltd.</h1>
+                    <p data-translate>623 Soi Onnut 70/1 Sub 2<br>
+                    Pravet Sub-District, Pravet District,<br>
+                    Bangkok 10250</p>
+                    <p data-translate>Tel.: +66 2320 1994</p>
+                </div>
+            </div>
+            
+            <div class="right-section">
+                <div class="doc-info">
+                    Document No: FM-WFA-SER-057<br>
+                    Revision: 00<br>
+                    Date: <span id="currentDate"></span>
+                </div>
+                <div class="qr-code">
+                    <img src="QR-Code.jpg" alt="QR Code">
+                </div>
+            </div>
+        </div>
 
-    <form id="pump-service-form">
-        <!-- Include modular sections -->
-        <div id="customer-info"></div>
-        <div id="pump-info"></div>
-        <div id="operating-conditions"></div>
-        <div id="customer-preparation"></div>
-    </form>
+        <div class="page-title">
+            <h2 data-translate>PUMP SERVICE CHECKLIST - Part 1</h2>
+        </div>
+
+        <form id="pump-service-form">
+            <!-- Include modular sections -->
+            <div id="customer-info"></div>
+            <div id="pump-info"></div>
+            <div id="operating-conditions"></div>
+            <div id="customer-preparation"></div>
+        </form>
+    </div>
 
     <script>
         // Load modular sections
         fetch('customer-info.html')
             .then(response => response.text())
-            .then(html => document.getElementById('customer-info').innerHTML = html);
-            
+            .then(data => {
+                document.getElementById('customer-info').innerHTML = data;
+            });
+
         fetch('pump-info.html')
             .then(response => response.text())
-            .then(html => document.getElementById('pump-info').innerHTML = html);
-            
+            .then(data => {
+                document.getElementById('pump-info').innerHTML = data;
+            });
+
         fetch('operating-conditions.html')
             .then(response => response.text())
-            .then(html => document.getElementById('operating-conditions').innerHTML = html);
-            
+            .then(data => {
+                document.getElementById('operating-conditions').innerHTML = data;
+            });
+
         fetch('customer-preparation.html')
             .then(response => response.text())
-            .then(html => document.getElementById('customer-preparation').innerHTML = html);
+            .then(data => {
+                document.getElementById('customer-preparation').innerHTML = data;
+            });
 
         // Set current date
-        document.addEventListener('DOMContentLoaded', () => {
-            document.getElementById('currentDate').textContent = new Date().toLocaleDateString();
-            changeLanguage('en'); // Set default language
-        });
+        const currentDate = new Date().toLocaleDateString();
+        document.getElementById('currentDate').textContent = currentDate;
+
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en'
+            }, 'google_translate_element');
+        }
     </script>
 </body>
 </html>
