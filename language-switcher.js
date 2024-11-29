@@ -19,7 +19,7 @@ async function translateText(text, targetLang) {
 async function translatePage(lang) {
     if (lang === 'en') {
         // Restore original English content
-        document.querySelectorAll('[data-translate]').forEach(element => {
+        document.querySelectorAll('[data-translate], [data-translate-address]').forEach(element => {
             const originalText = element.getAttribute('data-original-text');
             if (originalText) {
                 element.textContent = originalText;
@@ -30,7 +30,7 @@ async function translatePage(lang) {
     }
 
     // Store original text and translate to target language
-    const elements = document.querySelectorAll('[data-translate]');
+    const elements = document.querySelectorAll('[data-translate], [data-translate-address]');
     for (const element of elements) {
         // Store original text if not already stored
         if (!element.getAttribute('data-original-text')) {
