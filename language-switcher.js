@@ -192,28 +192,36 @@ function changeLanguage(lang) {
     localStorage.setItem('selectedLanguage', lang);
 }
 
-// Update button states
 function updateButtonState(lang) {
     document.getElementById('en-btn').classList.toggle('active', lang === 'en');
     document.getElementById('th-btn').classList.toggle('active', lang === 'th');
 }
 
-// Initialize on page load
 document.addEventListener('DOMContentLoaded', function() {
     // Restore last selected language or default to English
     const savedLanguage = localStorage.getItem('selectedLanguage') || 'en';
-    changeLanguage(savedLanguage);
     
-    // Add mutation observer to handle dynamically loaded content
+    // Set initial language
+    changeLanguage(savedLanguage);
+
+    // Add event listeners to language buttons
+    document.getElementById('en-btn').addEventListener('click', () => changeLanguage('en'));
+    document.getElementById('th-btn').addEventListener('click', () => changeLanguage('th'));
+
+    // Create MutationObserver to handle dynamic content
     const observer = new MutationObserver((mutations) => {
         mutations.forEach((mutation) => {
-            if (mutation.addedNodes.length) {
-                const savedLanguage = localStorage.getItem('selectedLanguage') || 'en';
-                changeLanguage(savedLanguage);
+            if (mutation.type === 'childList' || mutation.type === 'subtree') {
+                // Re-apply translations to new content
+                const currentLang = localStorage.getItem('selectedLanguage') || 'en';
+                translateElements(currentLang);
             }
         });
     });
-    
+
     // Start observing the document with the configured parameters
-    observer.observe(document.body, { childList: true, subtree: true });
+    observer.observe(document.body, {
+        childList: true,
+        subtree: true
+    });
 });
