@@ -13,9 +13,9 @@
     <div class="navbar">
         <div class="language-selector">
             <div id="google_translate_element"></div>
-            <button id="en-btn" class="language-btn active" onclick="changeLanguage('en')" aria-label="Switch to English">English</button>
-            <button id="th-btn" class="language-btn" onclick="changeLanguage('th')" aria-label="Switch to Thai">ไทย</button>
-            <button type="button" class="print-btn" onclick="generatePDF()" aria-label="Generate PDF">Generate PDF</button>
+            <button id="en-btn" class="language-btn active" onclick="changeLanguage('en')" data-translate="English" aria-label="Switch to English">English</button>
+            <button id="th-btn" class="language-btn" onclick="changeLanguage('th')" data-translate="Thai" aria-label="Switch to Thai">ไทย</button>
+            <button type="button" class="print-btn" onclick="generatePDF()" data-translate="Generate PDF" aria-label="Generate PDF">Generate PDF</button>
         </div>
     </div>
 
@@ -24,51 +24,50 @@
             <div class="header-left">
                 <div class="logo-section">
                     <div class="logo-container">
-                        <img src="Water-Field-Asia-Logo.png" alt="Water Field Asia Logo" class="header-logo">
+                        <img src="Water-Field-Asia-Logo.png" alt="Water Field Asia Logo" data-translate="Water Field Asia Logo" class="header-logo">
                     </div>
                     <div class="company-address">
-                        <p class="company-name"><strong>Water Field Asia Co., Ltd.</strong></p>
-                        <p><strong>623 Soi Onnut 70/1 Sub 2</strong></p>
-                        <p><strong>Pravet Sub-District, Pravet District,</strong></p>
-                        <p><strong>Bangkok 10250</strong></p>
-                        <p class="phone-number"><strong>Tel.: +66 2320 1994</strong></p>
+                        <p class="company-name"><strong data-translate="company-name">Water Field Asia Co., Ltd.</strong></p>
+                        <p><strong data-translate="address-line1">623 Soi Onnut 70/1 Sub 2</strong></p>
+                        <p><strong data-translate="address-line2">Pravet Sub-District, Pravet District,</strong></p>
+                        <p><strong data-translate="address-line3">Bangkok 10250</strong></p>
+                        <p class="phone-number"><strong data-translate="tel">Tel.: +66 2320 1994</strong></p>
                     </div>
                 </div>
             </div>
             <div class="header-right">
                 <div class="document-info">
-                    <p><strong>Document No: FM-WFA-SER-057</strong></p>
-                    <p><strong>Revision: 00</strong></p>
-                    <p><strong>Date: <span id="currentDate"></span></strong></p>
+                    <p><strong data-translate="document-no">Document No: FM-WFA-SER-057</strong></p>
+                    <p><strong data-translate="revision">Revision: 00</strong></p>
+                    <p><strong data-translate="date">Date: <span id="currentDate"></span></strong></p>
                 </div>
                 <div class="qr-code">
-                    <img src="QR-Code.jpg" alt="QR Code" class="qr-image">
+                    <img src="QR-Code.jpg" alt="QR Code" data-translate="QR Code" class="qr-image">
                 </div>
             </div>
         </div>
 
         <div class="page-title">
-            <h1 data-translate>PUMP SERVICE CHECKLIST - Part 1</h1>
+            <h1 data-translate="page-title">PUMP SERVICE CHECKLIST - Part 1</h1>
         </div>
 
         <div class="sections-container">
             <section class="form-section" id="customer-info-section">
-                <h2 data-translate>1. Customer Information</h2>
+                <h2 data-translate="customer-info">1. Customer Information</h2>
                 <div id="customer-info-content"></div>
             </section>
 
             <section class="form-section" id="pump-info-section">
-                <h2 data-translate>2. Pump Information</h2>
+                <h2 data-translate="pump-info">2. Pump Information</h2>
                 <div id="pump-info-content"></div>
             </section>
 
             <section class="form-section" id="operating-conditions-section">
-                <h2 data-translate>3. Operating Conditions</h2>
+                <h2 data-translate="operating-conditions">3. Operating Conditions</h2>
                 <div id="operating-conditions-content"></div>
             </section>
 
-            <section class="form-section" id="customer-preparation-section">
-                <h2 data-translate>4. Customer Preparation Checklist</h2>
+            <section class="form-section page-break-before" id="customer-preparation-section">
                 <div id="customer-preparation-content"></div>
             </section>
         </div>
@@ -84,24 +83,36 @@
             .then(response => response.text())
             .then(data => {
                 document.getElementById('customer-info-content').innerHTML = data;
+                // Trigger translation after content is loaded
+                const savedLanguage = localStorage.getItem('selectedLanguage') || 'en';
+                changeLanguage(savedLanguage);
             });
 
         fetch('pump-info.html')
             .then(response => response.text())
             .then(data => {
                 document.getElementById('pump-info-content').innerHTML = data;
+                // Trigger translation after content is loaded
+                const savedLanguage = localStorage.getItem('selectedLanguage') || 'en';
+                changeLanguage(savedLanguage);
             });
 
         fetch('operating-conditions.html')
             .then(response => response.text())
             .then(data => {
                 document.getElementById('operating-conditions-content').innerHTML = data;
+                // Trigger translation after content is loaded
+                const savedLanguage = localStorage.getItem('selectedLanguage') || 'en';
+                changeLanguage(savedLanguage);
             });
 
         fetch('customer-preparation.html')
             .then(response => response.text())
             .then(data => {
                 document.getElementById('customer-preparation-content').innerHTML = data;
+                // Trigger translation after content is loaded
+                const savedLanguage = localStorage.getItem('selectedLanguage') || 'en';
+                changeLanguage(savedLanguage);
             });
     </script>
 </body>

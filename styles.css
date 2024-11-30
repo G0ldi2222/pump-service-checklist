@@ -75,28 +75,58 @@ h3 { font-size: 1.5rem; }
 .checklist-item {
     display: flex;
     align-items: center;
-    gap: 8px;
-    margin-bottom: 10px;
+    gap: 12px;
+    margin-bottom: 1rem;
+    padding: 8px 0;
 }
 
 .checklist-item input[type="checkbox"] {
     margin: 0;
-    width: 16px;
-    height: 16px;
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
 }
 
 .checklist-item label {
     margin: 0;
-}
-
-.training-hours-input {
-    width: 60px;
-    height: 25px;
-    padding: 2px 5px;
-    margin: 0 4px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .checklist-item span {
+    white-space: nowrap;
+}
+
+.training-hours-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 1rem;
+    padding: 8px 0;
+}
+
+.training-hours-container input[type="checkbox"] {
+    margin: 0;
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+
+.training-hours-container label {
+    margin: 0;
+}
+
+.training-hours-input {
+    width: 70px;
+    height: 30px;
+    padding: 4px 8px;
+    margin: 0 8px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+}
+
+.training-hours-container span {
     white-space: nowrap;
 }
 
@@ -315,6 +345,83 @@ span[lang="en"], span[lang="th"] {
     /* Hide print button */
     .print-btn {
         display: none !important;
+    }
+}
+
+/* Print and PDF Styles */
+@media print {
+    .page-break-before {
+        break-before: always;
+        page-break-before: always;
+        margin-top: 0;
+        padding-top: 0;
+    }
+
+    @page {
+        size: A4;
+        margin: 15mm;
+    }
+
+    body {
+        padding: 0;
+        margin: 0;
+        background: white;
+    }
+
+    .content-wrapper {
+        padding: 0;
+        margin: 0;
+        width: 100%;
+    }
+
+    .form-section {
+        page-break-inside: avoid;
+        break-inside: avoid;
+        margin: 0;
+        padding: 0;
+        box-shadow: none;
+        border: none;
+    }
+
+    #operating-conditions-section {
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+
+    #customer-preparation-section {
+        padding-top: 15mm;
+    }
+
+    .checklist-group {
+        page-break-inside: avoid;
+        break-inside: avoid;
+        margin-bottom: 15px;
+        border: none;
+        padding: 10px 0;
+    }
+
+    .checklist-item {
+        page-break-inside: avoid;
+        break-inside: avoid;
+    }
+
+    .important-notes {
+        page-break-inside: avoid;
+        break-inside: avoid;
+        background-color: white !important;
+        border-left: 2px solid #ffd700;
+        margin-top: 15px;
+    }
+
+    input[type="checkbox"] {
+        border: 1px solid #000;
+        color: #000;
+    }
+
+    /* Ensure text is black for better printing */
+    * {
+        color: #000 !important;
+        text-shadow: none !important;
     }
 }
 

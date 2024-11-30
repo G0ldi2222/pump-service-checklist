@@ -1,101 +1,104 @@
 <!-- Customer Preparation Checklist Section -->
 <div class="form-section">
+    <h2 data-translate="customer-preparation">4. Customer Preparation Checklist</h2>
     <form id="preparation-checklist" autocomplete="on">
         <div class="checklist-group">
-            <h3 data-translate>Pre-Service Requirements</h3>
+            <h3 data-translate="pre-service-requirements">Pre-Service Requirements</h3>
             
             <div class="checklist-item">
                 <input type="checkbox" id="system_flush" name="system_flush" autocomplete="off">
-                <label for="system_flush" data-translate>System flushed (if hazardous/hardening materials)</label>
+                <label for="system_flush" data-translate="system-flush">System flushed (if hazardous/hardening materials)</label>
             </div>
             
             <div class="checklist-item">
                 <input type="checkbox" id="documentation" name="documentation" autocomplete="off">
-                <label for="documentation" data-translate>Safety Training required?</label>
-                <input type="number" id="training_hours" name="training_hours" step="0.5" min="0" autocomplete="off" class="training-hours-input" aria-label="Training hours">
-                <span data-translate>hours</span>
+                <label for="documentation">
+                    <span data-translate="safety-training">Safety Training required?</span>
+                    <input type="number" id="training_hours" name="training_hours" step="0.5" min="0" autocomplete="off" class="training-hours-input" aria-label="Training hours">
+                    <span data-translate="hours">hours</span>
+                </label>
             </div>
             
             <div class="checklist-item">
                 <input type="checkbox" id="harmless_form" name="harmless_form" autocomplete="off">
-                <label for="harmless_form" data-translate>Declaration of Harmlessness form (in the operation manual)</label>
+                <label for="harmless_form" data-translate="harmless-form">Declaration of Harmlessness form (in the operation manual)</label>
             </div>
             
             <div class="checklist-item">
                 <input type="checkbox" id="sds" name="sds" autocomplete="off">
-                <label for="sds" data-translate>Safety Data Sheet (SDS) (if applicable)</label>
+                <label for="sds" data-translate="sds">Safety Data Sheet (SDS) (if applicable)</label>
             </div>
             
             <div class="checklist-item">
                 <input type="checkbox" id="alignment_report" name="alignment_report" autocomplete="off">
-                <label for="alignment_report" data-translate>Latest alignment report (if available)</label>
+                <label for="alignment_report" data-translate="alignment-report">Latest alignment report (if available)</label>
             </div>
             
             <div class="checklist-item">
                 <input type="checkbox" id="operation_records" name="operation_records" autocomplete="off">
-                <label for="operation_records" data-translate>Operating condition records (if available) - for example vibration assessment records</label>
+                <label for="operation_records" data-translate="operating-records">Operating condition records (if available) - for example vibration assessment records</label>
             </div>
         </div>
 
         <div class="checklist-group">
-            <h3 data-translate>Pump Preparation (By Customer or WFA)</h3>
+            <h3 data-translate="pump-preparation">Pump Preparation (By Customer or WFA)</h3>
             
             <div class="checklist-item">
                 <input type="checkbox" id="isolation" name="isolation" autocomplete="off">
-                <label for="isolation" data-translate>Pump isolated from power supply (customer responsibility)</label>
+                <label for="isolation" data-translate="pump-isolation">Pump isolated from power supply (customer responsibility)</label>
             </div>
             
             <div class="checklist-item">
                 <input type="checkbox" id="valves" name="valves" autocomplete="off">
-                <label for="valves" data-translate>Suction/discharge valves locked (customer responsibility)</label>
+                <label for="valves" data-translate="valves-locked">Suction/discharge valves locked (customer responsibility)</label>
             </div>
             
             <div class="checklist-item">
                 <input type="checkbox" id="drain" name="drain" autocomplete="off">
-                <label for="drain" data-translate>Pump drained (customer responsibility)</label>
+                <label for="drain" data-translate="pump-drained">Pump drained (customer responsibility)</label>
             </div>
             
             <div class="checklist-item">
                 <input type="checkbox" id="aux_systems" name="aux_systems" autocomplete="off">
-                <label for="aux_systems" data-translate>Auxiliary systems disconnected for example external sensors etc. (customer responsibility)</label>
+                <label for="aux_systems" data-translate="aux-systems-disconnected">Auxiliary systems disconnected for example external sensors etc. (customer responsibility)</label>
             </div>
             
             <div class="checklist-item">
                 <input type="checkbox" id="coupling_guard" name="coupling_guard" autocomplete="off">
-                <label for="coupling_guard" data-translate>Coupling guard removed</label>
+                <label for="coupling_guard" data-translate="coupling-guard-removed">Coupling guard removed</label>
             </div>
 
             <div class="checklist-item">
                 <input type="checkbox" id="coupling_disconnect" name="coupling_disconnect" autocomplete="off">
-                <label for="coupling_disconnect" data-translate>Coupling disconnected</label>
+                <label for="coupling_disconnect" data-translate="coupling-disconnected">Coupling disconnected</label>
             </div>
 
             <div class="checklist-item">
                 <input type="checkbox" id="pump_cleaned" name="pump_cleaned" autocomplete="off">
-                <label for="pump_cleaned" data-translate>Pump cleaned externally</label>
+                <label for="pump_cleaned" data-translate="pump-cleaned">Pump cleaned externally</label>
             </div>
 
             <div class="checklist-item">
                 <input type="checkbox" id="openings_protected" name="openings_protected" autocomplete="off">
-                <label for="openings_protected" data-translate>All openings protected</label>
+                <label for="openings_protected" data-translate="openings-protected">All openings protected</label>
             </div>
 
             <div class="checklist-item">
                 <input type="checkbox" id="photos_taken" name="photos_taken" autocomplete="off">
-                <label for="photos_taken" data-translate>Photographs taken (if possible)</label>
+                <label for="photos_taken" data-translate="photos-taken">Photographs taken (if possible)</label>
             </div>
         </div>
     </form>
 
     <div class="important-notes">
-        <h3 data-translate>Important Notes:</h3>
+        <h3 data-translate="important-notes">Important Notes:</h3>
         <ol>
-            <li data-translate>All work must be performed by qualified personnel only</li>
-            <li data-translate>Maintain proper documentation throughout the service process</li>
-            <li data-translate>Use only OEM parts or approved equivalents</li>
-            <li data-translate>Follow all safety protocols, especially regarding magnetic coupling hazards</li>
-            <li data-translate>Refer to manufacturer's manual for specific torque values and clearances</li>
-            <li data-translate>Required for magnetic coupling handling - keep sensitive items at minimum 1m distance</li>
+            <li data-translate="note-1">All work must be performed by qualified personnel only</li>
+            <li data-translate="note-2">Maintain proper documentation throughout the service process</li>
+            <li data-translate="note-3">Use only OEM parts or approved equivalents</li>
+            <li data-translate="note-4">Follow all safety protocols, especially regarding magnetic coupling hazards</li>
+            <li data-translate="note-5">Refer to manufacturer's manual for specific torque values and clearances</li>
+            <li data-translate="note-6">Required for magnetic coupling handling - keep sensitive items at minimum 1m distance</li>
         </ol>
     </div>
 </div>
