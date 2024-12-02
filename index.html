@@ -39,7 +39,7 @@
                 <div class="document-info">
                     <p><strong data-translate="document-no">Document No: FM-WFA-SER-057</strong></p>
                     <p><strong data-translate="revision">Revision: 00</strong></p>
-                    <p><strong data-translate="date">Date: <span id="currentDate"></span></strong></p>
+                    <p><strong><span data-translate="date">Date:</span> <span id="currentDate"></span></strong></p>
                 </div>
                 <div class="qr-code">
                     <img src="QR-Code.jpg" alt="QR Code" data-translate="QR Code" class="qr-image">
@@ -74,9 +74,23 @@
     </div>
 
     <script>
-        // Set current date
-        const currentDate = new Date().toLocaleDateString();
-        document.getElementById('currentDate').textContent = currentDate;
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set current date
+            function updateCurrentDate() {
+                const today = new Date();
+                const day = String(today.getDate()).padStart(2, '0');
+                const month = String(today.getMonth() + 1).padStart(2, '0');
+                const year = today.getFullYear();
+                const formattedDate = `${day}/${month}/${year}`;
+                document.getElementById('currentDate').textContent = formattedDate;
+            }
+
+            // Initial date set
+            updateCurrentDate();
+
+            // Update date every minute
+            setInterval(updateCurrentDate, 60000);
+        });
 
         // Load modular sections
         fetch('customer-info.html')

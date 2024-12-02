@@ -9,7 +9,7 @@ const translations = {
         "tel": "Tel.: +66 2320 1994",
         "document-no": "Document No: FM-WFA-SER-057",
         "revision": "Revision: 00",
-        "date": "Date: 11/30/2024",
+        "date": "Date:",
         
         // Main sections
         "page-title": "PUMP SERVICE CHECKLIST - Part 1",
@@ -92,7 +92,7 @@ const translations = {
         "tel": "โทร: +66 2320 1994",
         "document-no": "เลขที่เอกสาร: FM-WFA-SER-057",
         "revision": "ครั้งที่แก้ไข: 00",
-        "date": "วันที่: 11/30/2024",
+        "date": "วันที่:",
         
         // Main sections
         "page-title": "รายการตรวจสอบการบริการปั๊ม - ส่วนที่ 1",
@@ -168,60 +168,50 @@ const translations = {
     }
 };
 
-// Function to change language
-function changeLanguage(lang) {
-    // Update content based on selected language
-    document.querySelectorAll('[data-translate]').forEach(element => {
-        const key = element.getAttribute('data-translate') || element.textContent.trim();
-        if (translations[lang] && translations[lang][key]) {
-            element.textContent = translations[lang][key];
-        }
-    });
-    
-    // Also update elements with data-translate attribute value
-    document.querySelectorAll('[data-translate]').forEach(element => {
+let currentLanguage = localStorage.getItem('selectedLanguage') || 'en';
+
+function translateElements(elements) {
+    elements.forEach(element => {
         const key = element.getAttribute('data-translate');
-        if (key && translations[lang] && translations[lang][key]) {
-            element.textContent = translations[lang][key];
+        if (key && translations[currentLanguage] && translations[currentLanguage][key]) {
+            element.textContent = translations[currentLanguage][key];
         }
     });
-    
-    updateButtonState(lang);
-    
-    // Save language preference
+}
+
+function changeLanguage(lang) {
+    currentLanguage = lang;
     localStorage.setItem('selectedLanguage', lang);
-}
-
-function updateButtonState(lang) {
-    document.getElementById('en-btn').classList.toggle('active', lang === 'en');
-    document.getElementById('th-btn').classList.toggle('active', lang === 'th');
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-    // Restore last selected language or default to English
-    const savedLanguage = localStorage.getItem('selectedLanguage') || 'en';
     
-    // Set initial language
-    changeLanguage(savedLanguage);
+    // Translate all elements with data-translate attribute
+    const translatableElements = document.querySelectorAll('[data-translate]');
+    translateElements(translatableElements);
+}
 
-    // Add event listeners to language buttons
-    document.getElementById('en-btn').addEventListener('click', () => changeLanguage('en'));
-    document.getElementById('th-btn').addEventListener('click', () => changeLanguage('th'));
-
-    // Create MutationObserver to handle dynamic content
+// Wait for DOM to be ready before setting up observer
+document.addEventListener('DOMContentLoaded', function() {
+    // Set up MutationObserver to handle dynamically added content
     const observer = new MutationObserver((mutations) => {
         mutations.forEach((mutation) => {
-            if (mutation.type === 'childList' || mutation.type === 'subtree') {
-                // Re-apply translations to new content
-                const currentLang = localStorage.getItem('selectedLanguage') || 'en';
-                translateElements(currentLang);
+            if (mutation.type === 'childList') {
+                const translatableElements = mutation.target.querySelectorAll('[data-translate]');
+                if (translatableElements.length > 0) {
+                    translateElements(translatableElements);
+                }
             }
         });
     });
 
-    // Start observing the document with the configured parameters
-    observer.observe(document.body, {
-        childList: true,
-        subtree: true
-    });
+    // Start observing the document body with the configured parameters
+    if (document.body) {
+        observer.observe(document.body, { childList: true, subtree: true });
+    }
+
+    // Initialize language
+    const savedLanguage = localStorage.getItem('selectedLanguage') || 'en';
+    changeLanguage(savedLanguage);
+
+    // Add event listeners to language buttons
+    document.getElementById('en-btn')?.addEventListener('click', () => changeLanguage('en'));
+    document.getElementById('th-btn')?.addEventListener('click', () => changeLanguage('th'));
 });
