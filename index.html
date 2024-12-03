@@ -5,129 +5,252 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pump Service Checklist</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-    <script src="pdf-generator.js"></script>
-    <script src="language-switcher.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
+    <script src="language-switcher.js" defer></script>
+    <script src="app.js" defer></script>
 </head>
 <body>
     <div class="navbar">
         <div class="language-selector">
-            <div id="google_translate_element"></div>
-            <button id="en-btn" class="language-btn active" onclick="changeLanguage('en')" data-translate="English" aria-label="Switch to English">English</button>
-            <button id="th-btn" class="language-btn" onclick="changeLanguage('th')" data-translate="Thai" aria-label="Switch to Thai">ไทย</button>
-            <button type="button" class="print-btn" onclick="generatePDF()" data-translate="Generate PDF" aria-label="Generate PDF">Generate PDF</button>
+            <button type="button" id="en-btn" class="language-btn" data-lang="en">English</button>
+            <button type="button" id="th-btn" class="language-btn" data-lang="th">ไทย</button>
         </div>
+        <button type="button" id="generate-pdf-btn" class="print-btn">Generate PDF</button>
     </div>
 
     <div class="content-wrapper">
-        <div class="header-card">
+        <header class="document-header">
             <div class="header-left">
                 <div class="logo-section">
-                    <div class="logo-container">
-                        <img src="Water-Field-Asia-Logo.png" alt="Water Field Asia Logo" data-translate="Water Field Asia Logo" class="header-logo">
-                    </div>
+                    <img src="Water-Field-Asia-Logo.png" alt="Water Field Asia Logo" class="company-logo" data-translate="Water Field Asia Logo">
+                </div>
+                <div class="company-details">
+                    <h1 data-translate="company-name">Water Field Asia Co., Ltd.</h1>
                     <div class="company-address">
-                        <p class="company-name"><strong data-translate="company-name">Water Field Asia Co., Ltd.</strong></p>
-                        <p><strong data-translate="address-line1">623 Soi Onnut 70/1 Sub 2</strong></p>
-                        <p><strong data-translate="address-line2">Pravet Sub-District, Pravet District,</strong></p>
-                        <p><strong data-translate="address-line3">Bangkok 10250</strong></p>
-                        <p class="phone-number"><strong data-translate="tel">Tel.: +66 2320 1994</strong></p>
+                        <p data-translate="address-line1">623 Soi Onnut 70/1 Sub 2</p>
+                        <p data-translate="address-line2">Pravet Sub-District, Pravet District,</p>
+                        <p data-translate="address-line3">Bangkok 10250</p>
+                        <p class="tel" data-translate="tel">Tel.: +66 2320 1994</p>
                     </div>
                 </div>
             </div>
             <div class="header-right">
-                <div class="document-info">
-                    <p><strong data-translate="document-no">Document No: FM-WFA-SER-057</strong></p>
-                    <p><strong data-translate="revision">Revision: 00</strong></p>
-                    <p><strong><span data-translate="date">Date:</span> <span id="currentDate"></span></strong></p>
+                <div class="document-meta">
+                    <div class="meta-item">
+                        <label data-translate="document-no-label">Document No:</label>
+                        <span data-translate="document-no">FM-WFA-SER-057</span>
+                    </div>
+                    <div class="meta-item">
+                        <label data-translate="revision-label">Revision:</label>
+                        <span data-translate="revision">00</span>
+                    </div>
+                    <div class="meta-item">
+                        <label data-translate="date-label">Date:</label>
+                        <span id="currentDate"></span>
+                    </div>
                 </div>
-                <div class="qr-code">
-                    <img src="QR-Code.jpg" alt="QR Code" data-translate="QR Code" class="qr-image">
+                <div class="qr-section">
+                    <img src="QR-Code.jpg" alt="QR Code" class="qr-code">
+                    <span class="qr-label" data-translate="qr-code">QR Code</span>
                 </div>
             </div>
-        </div>
+        </header>
 
-        <div class="page-title">
-            <h1 data-translate="page-title">PUMP SERVICE CHECKLIST - Part 1</h1>
-        </div>
-
-        <div class="sections-container">
-            <section class="form-section" id="customer-info-section">
+        <main class="form-container">
+            <!-- Customer Information -->
+            <section class="form-section" id="customer-info">
                 <h2 data-translate="customer-info">1. Customer Information</h2>
-                <div id="customer-info-content"></div>
+                <div class="form-grid">
+                    <div class="input-group">
+                        <label for="customer_name" class="required" data-translate="Customer Name">Customer Name</label>
+                        <input type="text" id="customer_name" name="customer_name" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="contact_person" class="required" data-translate="Contact Person">Contact Person</label>
+                        <input type="text" id="contact_person" name="contact_person" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="phone" class="required" data-translate="Phone Number">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="email" class="required" data-translate="Email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="service_location" class="required" data-translate="Service Location">Service Location</label>
+                        <input type="text" id="service_location" name="service_location" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="service_date" class="required" data-translate="Date">Date</label>
+                        <input type="date" id="service_date" name="service_date" required>
+                    </div>
+                </div>
             </section>
 
-            <section class="form-section" id="pump-info-section">
+            <!-- Pump Information -->
+            <section class="form-section" id="pump-info">
                 <h2 data-translate="pump-info">2. Pump Information</h2>
-                <div id="pump-info-content"></div>
+                <div class="form-grid">
+                    <div class="input-group">
+                        <label for="pump_type" class="required" data-translate="Pump Type">Pump Type</label>
+                        <input type="text" id="pump_type" name="pump_type" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="serial_number" class="required" data-translate="Serial Number">Serial Number</label>
+                        <input type="text" id="serial_number" name="serial_number" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="size" class="required" data-translate="Size">Size</label>
+                        <input type="text" id="size" name="size" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="manufacturing_year" class="required" data-translate="Year of Manufacturing">Year of Manufacturing</label>
+                        <input type="number" id="manufacturing_year" name="manufacturing_year" min="1900" max="2100" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="motor_power" data-translate="Motor Power (kW)">Motor Power (kW)</label>
+                        <input type="number" id="motor_power" name="motor_power" step="0.1">
+                    </div>
+                    <div class="input-group">
+                        <label for="speed" data-translate="Speed (rpm)">Speed (rpm)</label>
+                        <input type="number" id="speed" name="speed">
+                    </div>
+                </div>
             </section>
 
-            <section class="form-section" id="operating-conditions-section">
+            <!-- Operating Conditions -->
+            <section class="form-section" id="operating-conditions">
                 <h2 data-translate="operating-conditions">3. Operating Conditions</h2>
-                <div id="operating-conditions-content"></div>
+                <div class="form-grid">
+                    <div class="input-group">
+                        <label for="temperature" class="required" data-translate="Temperature (°C)">Temperature (°C)</label>
+                        <input type="number" id="temperature" name="temperature" step="0.5" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="flow_rate" class="required" data-translate="Flow Rate (m³/h)">Flow Rate (m³/h)</label>
+                        <input type="number" id="flow_rate" name="flow_rate" step="0.5" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="suction_pressure" class="required" data-translate="Suction Pressure (bar)">Suction Pressure (bar)</label>
+                        <input type="number" id="suction_pressure" name="suction_pressure" step="0.5" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="discharge_pressure" class="required" data-translate="Discharge Pressure (bar)">Discharge Pressure (bar)</label>
+                        <input type="number" id="discharge_pressure" name="discharge_pressure" step="0.1" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="total_head" class="required" data-translate="Total Head (m)">Total Head (m)</label>
+                        <input type="number" id="total_head" name="total_head" step="0.1" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="medium" class="required" data-translate="Pumped Medium">Pumped Medium</label>
+                        <input type="text" id="medium" name="medium" required>
+                    </div>
+                </div>
+                <div class="input-group full-width">
+                    <label for="issues" class="required" data-translate="Description of Issues/Reason for Service">Description of Issues/Reason for Service</label>
+                    <textarea id="issues" name="issues" required></textarea>
+                </div>
             </section>
 
-            <section class="form-section" id="customer-preparation-section">
-                <div id="customer-preparation-content"></div>
+            <!-- Customer Preparation Checklist -->
+            <section class="form-section" id="preparation-checklist">
+                <h2 data-translate="customer-preparation">4. Customer Preparation Checklist</h2>
+                
+                <div class="checklist-group">
+                    <h3 data-translate="pre-service-requirements">Pre-Service Requirements</h3>
+                    <div class="checklist-items">
+                        <div class="checklist-item">
+                            <input type="checkbox" id="system_flush" name="system_flush">
+                            <label for="system_flush" data-translate="system-flush">System flushed (if hazardous/hardening materials)</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="safety_training" name="safety_training">
+                            <label for="safety_training">
+                                <span data-translate="safety-training">Safety Training required?</span>
+                                <input type="number" class="hours-input" id="training_hours" name="training_hours" step="0.5" min="0">
+                                <span data-translate="hours">hours</span>
+                            </label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="harmless_form" name="harmless_form">
+                            <label for="harmless_form" data-translate="harmless-form">Declaration of Harmlessness form (in the operation manual)</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="sds" name="sds">
+                            <label for="sds" data-translate="sds">Safety Data Sheet (SDS) (if applicable)</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="alignment_report" name="alignment_report">
+                            <label for="alignment_report" data-translate="alignment-report">Latest alignment report (if available)</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="operation_records" name="operation_records">
+                            <label for="operation_records" data-translate="operating-records">Operating condition records (if available) - for example vibration assessment records</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="checklist-group">
+                    <h3 data-translate="pump-preparation">Pump Preparation (By Customer or WFA)</h3>
+                    <div class="checklist-items">
+                        <div class="checklist-item">
+                            <input type="checkbox" id="isolation" name="isolation">
+                            <label for="isolation" data-translate="pump-isolation">Pump isolated from power supply (customer responsibility)</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="valves" name="valves">
+                            <label for="valves" data-translate="valves-locked">Suction/discharge valves locked (customer responsibility)</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="drain" name="drain">
+                            <label for="drain" data-translate="pump-drained">Pump drained (customer responsibility)</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="aux_systems" name="aux_systems">
+                            <label for="aux_systems" data-translate="aux-systems-disconnected">Auxiliary systems disconnected for example external sensors etc. (customer responsibility)</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="coupling_guard" name="coupling_guard">
+                            <label for="coupling_guard" data-translate="coupling-guard-removed">Coupling guard removed</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="coupling_disconnect" name="coupling_disconnect">
+                            <label for="coupling_disconnect" data-translate="coupling-disconnected">Coupling disconnected</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="pump_cleaned" name="pump_cleaned">
+                            <label for="pump_cleaned" data-translate="pump-cleaned">Pump cleaned externally</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="openings_protected" name="openings_protected">
+                            <label for="openings_protected" data-translate="openings-protected">All openings protected</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="photos_taken" name="photos_taken">
+                            <label for="photos_taken" data-translate="photos-taken">Photographs taken (if possible)</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="important-notes">
+                    <h3 data-translate="important-notes">Important Notes:</h3>
+                    <ol>
+                        <li data-translate="note-1">All work must be performed by qualified personnel only</li>
+                        <li data-translate="note-2">Maintain proper documentation throughout the service process</li>
+                        <li data-translate="note-3">Use only OEM parts or approved equivalents</li>
+                        <li data-translate="note-4">Follow all safety protocols, especially regarding magnetic coupling hazards</li>
+                        <li data-translate="note-5">Refer to manufacturer's manual for specific torque values and clearances</li>
+                        <li data-translate="note-6">Required for magnetic coupling handling - keep sensitive items at minimum 1m distance</li>
+                    </ol>
+                </div>
             </section>
-        </div>
+        </main>
     </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Set current date
-            function updateCurrentDate() {
-                const today = new Date();
-                const day = String(today.getDate()).padStart(2, '0');
-                const month = String(today.getMonth() + 1).padStart(2, '0');
-                const year = today.getFullYear();
-                const formattedDate = `${day}/${month}/${year}`;
-                document.getElementById('currentDate').textContent = formattedDate;
-            }
-
-            // Initial date set
-            updateCurrentDate();
-
-            // Update date every minute
-            setInterval(updateCurrentDate, 60000);
-        });
-
-        // Load modular sections
-        fetch('customer-info.html')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('customer-info-content').innerHTML = data;
-                // Trigger translation after content is loaded
-                const savedLanguage = localStorage.getItem('selectedLanguage') || 'en';
-                changeLanguage(savedLanguage);
-            });
-
-        fetch('pump-info.html')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('pump-info-content').innerHTML = data;
-                // Trigger translation after content is loaded
-                const savedLanguage = localStorage.getItem('selectedLanguage') || 'en';
-                changeLanguage(savedLanguage);
-            });
-
-        fetch('operating-conditions.html')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('operating-conditions-content').innerHTML = data;
-                // Trigger translation after content is loaded
-                const savedLanguage = localStorage.getItem('selectedLanguage') || 'en';
-                changeLanguage(savedLanguage);
-            });
-
-        fetch('customer-preparation.html')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('customer-preparation-content').innerHTML = data;
-                // Trigger translation after content is loaded
-                const savedLanguage = localStorage.getItem('selectedLanguage') || 'en';
-                changeLanguage(savedLanguage);
-            });
-    </script>
 </body>
-</html>
+</html> 

@@ -1,13 +1,14 @@
-/* Modern Reset and Base Styles */
+/* Base Styles */
 :root {
-    --primary-color: #0056b3;
-    --secondary-color: #6c757d;
-    --success-color: #28a745;
-    --background-color: #ffffff;
-    --text-color: #333333;
-    --border-color: #dee2e6;
-    --hover-color: #f8f9fa;
-    --shadow-color: rgba(0, 0, 0, 0.1);
+    --primary: #1e293b;
+    --primary-light: #475569;
+    --text: #334155;
+    --text-light: #64748b;
+    --border: #e2e8f0;
+    --background: #f8fafc;
+    --warning-bg: #fff7ed;
+    --warning-border: #fdba74;
+    --warning-text: #9a3412;
 }
 
 * {
@@ -17,404 +18,458 @@
 }
 
 body {
-    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-    line-height: 1.6;
-    color: var(--text-color);
-    background-color: var(--background-color);
-    padding: 4rem 2rem;
-    max-width: 1200px;
-    margin: 0 auto;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    line-height: 1.5;
+    color: var(--text);
+    background: var(--background);
+    -webkit-font-smoothing: antialiased;
 }
 
-/* Typography */
-h1, h2, h3, h4, h5, h6 {
-    margin-bottom: 1rem;
-    color: var(--primary-color);
-    font-weight: 600;
-    line-height: 1.3;
-}
-
-h1 { font-size: 2.5rem; }
-h2 { font-size: 2rem; }
-h3 { font-size: 1.5rem; }
-
-/* Navbar */
-.navbar {
-    position: fixed;
-    top: 10px;
-    right: 20px;
-    z-index: 1000;
-    background: transparent;
-    padding: 0;
-}
-
-.language-selector {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.language-btn, .print-btn {
-    padding: 6px 12px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 14px;
-    transition: all 0.2s;
-}
-
-.language-btn {
-    border: 1px solid var(--border-color);
-    background: white;
-}
-
-.language-btn:hover {
-    background-color: var(--hover-color);
-}
-
-.language-btn.active {
-    background-color: var(--primary-color);
-    color: white;
-    border-color: var(--primary-color);
-}
-
-.print-btn {
-    background-color: var(--primary-color);
-    color: white;
-    border: none;
-}
-
-.print-btn:hover {
-    background-color: #004494;
-}
-
-/* Content Layout */
+/* Layout */
 .content-wrapper {
-    width: 100%;
     max-width: 210mm;
-    margin: 0 auto;
+    margin: 20px auto;
     background: white;
-    padding: 20px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+/* Header Styles */
+.document-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 25px;
+    border-bottom: 1px solid var(--border);
+    gap: 40px;
+}
+
+/* Left Side */
+.header-left {
+    flex: 1;
+    max-width: 65%;
+}
+
+.logo-section {
+    margin-bottom: 15px;
+}
+
+.company-logo {
+    height: 45px;
+    width: auto;
+    object-fit: contain;
+}
+
+.company-details h1 {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: 12px;
+    line-height: 1.2;
+}
+
+.company-address {
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--text);
+}
+
+.company-address p {
+    margin: 0;
+}
+
+.company-address .tel {
+    margin-top: 8px;
+}
+
+/* Right Side */
+.header-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 20px;
+}
+
+.document-meta {
+    text-align: right;
+}
+
+.meta-item {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-bottom: 10px;
+}
+
+.meta-item:last-child {
+    margin-bottom: 0;
+}
+
+.meta-item label {
+    font-size: 14px;
+    color: var(--text-light);
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.meta-item span {
+    font-size: 14px;
+    color: var(--text);
+    font-weight: 500;
+}
+
+.qr-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.qr-code {
+    width: 90px;
+    height: 90px;
+    padding: 8px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    object-fit: contain;
+}
+
+.qr-label {
+    font-size: 12px;
+    color: var(--text-light);
+}
+
+/* Print Styles for Header */
+@media print {
+    .document-header {
+        padding: 0 0 20px 0;
+    }
+
+    .company-logo {
+        height: 40px;
+    }
+
+    .qr-code {
+        border-color: #666;
+    }
+}
+
+/* PDF Generation Styles for Header */
+.generating-pdf .document-header {
+    padding: 0 0 20px 0;
+}
+
+.generating-pdf .company-logo {
+    height: 40px;
+}
+
+.generating-pdf .qr-code {
+    border-color: #666;
+}
+
+/* Form Styles */
+.form-container {
+    padding: 25px;
 }
 
 .form-section {
-    background-color: white;
-    border-radius: 8px;
-    padding: 20px;
-    margin-bottom: 20px;
-    break-inside: avoid;
-    page-break-inside: avoid;
+    margin-bottom: 25px;
+    background: white;
 }
 
-/* Grid Layouts */
-.customer-info,
-.operating-info,
-.pump-info {
+.form-section h2 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: 15px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+}
+
+.form-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 15px;
-    margin-bottom: 20px;
-    break-inside: avoid !important;
-    page-break-inside: avoid !important;
 }
 
-/* Input Groups */
 .input-group {
-    margin-bottom: 15px;
-    break-inside: avoid;
-    page-break-inside: avoid;
-    display: flex;
-    flex-direction: column;
+    margin-bottom: 0;
 }
 
-.input-group label {
+.input-group.full-width {
+    grid-column: 1 / -1;
+    margin-top: 15px;
+}
+
+label {
     display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-light);
+    margin-bottom: 4px;
 }
 
-.input-group input[type="text"],
-.input-group input[type="email"],
-.input-group input[type="number"],
-.input-group input[type="date"],
-.input-group textarea {
+.required::after {
+    content: "*";
+    color: #dc2626;
+    margin-left: 4px;
+}
+
+input, textarea {
     width: 100%;
-    padding: 8px;
-    border: 1px solid var(--border-color);
+    padding: 8px 12px;
+    border: 1px solid var(--border);
     border-radius: 4px;
     font-size: 14px;
+    color: var(--text);
+    background: white;
 }
 
-.input-group input {
-    height: 35px;
-}
-
-.input-group textarea {
-    min-height: 100px;
+textarea {
+    min-height: 80px;
     resize: vertical;
 }
 
 /* Checklist Styles */
 .checklist-group {
     margin-bottom: 20px;
-    break-inside: avoid;
-    page-break-inside: avoid;
+    padding: 15px;
+    background: var(--background);
+    border-radius: 4px;
+}
+
+.checklist-group h3 {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: 12px;
+}
+
+.checklist-items {
+    display: grid;
+    gap: 8px;
 }
 
 .checklist-item {
     display: flex;
     align-items: flex-start;
-    margin-bottom: 8px;
     gap: 8px;
 }
 
-.checklist-item:last-child {
-    margin-bottom: 0;
-}
-
 .checklist-item input[type="checkbox"] {
-    margin-top: 4px;
     width: 16px;
     height: 16px;
-    flex-shrink: 0;
+    margin-top: 3px;
 }
 
 .checklist-item label {
+    font-size: 14px;
     margin: 0;
+    color: var(--text);
     font-weight: normal;
 }
 
-.checklist-item input[type="number"] {
-    width: 60px;
-    padding: 2px 5px;
-    flex-shrink: 0;
+.hours-input {
+    width: 60px !important;
+    margin: 0 4px;
+    padding: 4px 8px;
+    display: inline-block;
 }
 
 /* Important Notes */
 .important-notes {
-    background-color: #fff8dc;
-    border-left: 4px solid #ffd700;
+    margin-top: 25px;
     padding: 15px;
+    background: var(--warning-bg);
+    border: 1px solid var(--warning-border);
     border-radius: 4px;
-    margin-top: 20px;
 }
 
 .important-notes h3 {
-    color: #856404;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--warning-text);
     margin-bottom: 10px;
 }
 
 .important-notes ol {
-    margin-left: 20px;
+    padding-left: 20px;
 }
 
 .important-notes li {
-    margin-bottom: 8px;
-    line-height: 1.4;
-    color: #555;
+    font-size: 14px;
+    color: var(--warning-text);
+    margin-bottom: 6px;
 }
 
-/* Header Layout */
-.header-card {
+/* Navigation */
+.navbar {
+    position: fixed;
+    top: 20px;
+    right: 20px;
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 20px;
-    width: 100%;
+    gap: 10px;
+    z-index: 100;
 }
 
-.header-left {
-    flex: 2;
+.language-btn, .print-btn {
+    padding: 8px 16px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: white;
+    font-size: 14px;
+    cursor: pointer;
 }
 
-.header-right {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
+.language-btn.active {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
 }
 
-.logo-section {
-    display: flex;
-    flex-direction: column;
-}
-
-.logo-container {
-    margin-bottom: 10px;
-}
-
-.header-logo {
-    max-width: 200px;
-    height: auto;
-}
-
-.company-address {
-    margin-top: 5px;
-}
-
-.company-address p {
-    margin: 0;
-    line-height: 1.4;
-}
-
-.document-info {
-    text-align: right;
-    margin-bottom: 10px;
-}
-
-.document-info p {
-    margin: 0;
-    line-height: 1.4;
-    white-space: nowrap;
-}
-
-.qr-code {
-    width: 100px;
-    height: 100px;
-    margin-top: 10px;
-}
-
-.qr-image {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-}
-
-/* Language Specific Styles */
-[lang="th"] {
-    font-family: 'Sarabun', 'Thonburi', sans-serif;
-    display: none;
-}
-
-.content-section {
-    display: none;
-}
-
-.content-section.active {
-    display: block;
+.print-btn {
+    background: var(--primary);
+    color: white;
+    border: none;
 }
 
 /* Print Styles */
+@page {
+    size: A4;
+    margin: 15mm;
+}
+
 @media print {
     body {
-        margin: 0;
-        padding: 0;
         background: white;
-        font-family: Arial, sans-serif !important;
     }
 
     .content-wrapper {
-        padding: 0;
         margin: 0;
-        width: 100%;
-        font-size: 10pt;
-        line-height: 1.2;
+        padding: 0;
+        box-shadow: none;
+        border-radius: 0;
     }
 
     .navbar {
-        display: none !important;
+        display: none;
     }
 
-    /* Headers */
-    h2 {
-        margin: 2mm 0 1mm 0 !important;
-        font-size: 11pt !important;
-        font-weight: bold !important;
-        color: black !important;
+    .document-header {
+        padding: 0 0 15px 0;
     }
 
-    /* Sections */
+    .form-container {
+        padding: 15px 0;
+    }
+
     .form-section {
-        margin-bottom: 2mm !important;
-        padding: 0 !important;
+        margin-bottom: 20px;
+        page-break-inside: avoid;
     }
 
-    /* Grid layouts */
-    .customer-info,
-    .operating-info,
-    .pump-info {
-        display: grid !important;
-        grid-template-columns: 1fr 1fr !important;
-        gap: 2mm !important;
-        margin-bottom: 2mm !important;
+    .form-section h2 {
+        margin-bottom: 12px;
     }
 
-    /* Checklist items */
     .checklist-group {
-        margin-bottom: 2mm !important;
+        background: none;
+        padding: 0;
+        margin-bottom: 15px;
+        page-break-inside: avoid;
     }
 
     .checklist-item {
-        margin-bottom: 0.5mm !important;
-        display: flex !important;
-        align-items: flex-start !important;
+        page-break-inside: avoid;
     }
 
-    .checklist-item input[type="checkbox"] {
-        margin: 2px 4px 0 0 !important;
+    .important-notes {
+        background: none;
+        border: 1px solid #666;
+        margin-top: 20px;
+        page-break-inside: avoid;
     }
 
-    /* Form fields */
-    input[type="text"],
-    input[type="email"],
-    input[type="number"],
-    input[type="date"],
-    textarea {
-        border: 1px solid black !important;
-        padding: 1mm !important;
-        margin: 0.5mm 0 !important;
-        font-size: 10pt !important;
-        font-family: Arial, sans-serif !important;
-        background: white !important;
-        min-height: 4mm !important;
+    .important-notes h3,
+    .important-notes li {
+        color: var(--text);
     }
 
-    /* Header section */
-    .header-card {
-        margin-bottom: 3mm !important;
-    }
-
-    .header-left {
-        flex: 2;
-    }
-
-    .header-right {
-        flex: 1;
-    }
-
-    .company-address p {
-        margin: 0 !important;
-        line-height: 1.2 !important;
-        font-size: 10pt !important;
-    }
-
-    .document-info {
-        margin-bottom: 2mm !important;
-    }
-
-    .document-info p {
-        margin: 0 !important;
-        line-height: 1.2 !important;
-        font-size: 10pt !important;
-    }
-
-    /* Images */
-    img {
-        max-width: 100% !important;
-        height: auto !important;
-    }
-
-    .qr-code {
-        width: 25mm !important;
-        height: 25mm !important;
-    }
-
-    /* Remove all page break controls */
-    * {
-        page-break-inside: auto !important;
-        break-inside: auto !important;
-        page-break-before: auto !important;
-        break-before: auto !important;
-        page-break-after: auto !important;
-        break-after: auto !important;
+    /* Force Page Breaks */
+    #pump-info,
+    #operating-conditions,
+    #preparation-checklist {
+        page-break-before: always;
     }
 }
+
+.generating-pdf {
+    background: white !important;
+}
+
+.generating-pdf .content-wrapper {
+    margin: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    background: white !important;
+}
+
+.generating-pdf .form-section {
+    margin-bottom: 20px !important;
+    break-inside: avoid !important;
+}
+
+.generating-pdf .checklist-group {
+    background: none !important;
+    padding: 15px 0 !important;
+    margin-bottom: 15px !important;
+    break-inside: avoid !important;
+}
+
+.generating-pdf .checklist-item {
+    break-inside: avoid !important;
+}
+
+.generating-pdf .important-notes {
+    background: none !important;
+    border: 1px solid #666 !important;
+    margin-top: 20px !important;
+    break-inside: avoid !important;
+}
+
+.generating-pdf #pump-info,
+.generating-pdf #operating-conditions,
+.generating-pdf #preparation-checklist {
+    break-before: always !important;
+}
+
+.language-selector {
+    display: flex;
+    gap: 8px;
+    margin-right: 16px;
+}
+
+.language-btn {
+    padding: 8px 16px;
+    border: 1px solid #ddd;
+    background: white;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+.language-btn:hover {
+    background: #f5f5f5;
+    border-color: #ccc;
+}
+
+.language-btn.active {
+    background: #007bff;
+    color: white;
+    border-color: #0056b3;
+}
+
+.language-btn.active:hover {
+    background: #0056b3;
+} 
