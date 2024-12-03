@@ -1,39 +1,55 @@
-# Pump Service Checklist Web Application
+# Pump Service Checklist
 
 A bilingual (English/Thai) web application for documenting pump service procedures with dynamic translation capabilities.
 
+## Live Demo
+
+Visit the live application at: https://g0ldi2222.github.io/pump-service-checklist/
+
 ## Features
 
-- Dynamic translation between English and Thai
-- Comprehensive service checklist forms
-- PDF generation functionality
+- Bilingual support (English/Thai)
+- Dynamic form validation
+- PDF generation
 - Responsive design
-- Offline-capable translations
-- No API key required
+- Automatic date handling
+- Input sanitization
+- Comprehensive error handling
 
-## Getting Started
+## Local Development
 
-1. Clone the repository
+1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/pump-service-checklist.git
+git clone https://github.com/G0ldi2222/pump-service-checklist.git
+cd pump-service-checklist
 ```
 
-2. Open `index.html` in your web browser
-   - No server setup required
-   - Works directly from the file system
+2. Install dependencies:
+```bash
+npm install
+```
 
-## Usage
+3. Run tests:
+```bash
+npm test
+```
 
-1. Fill out the service checklist forms in English
-2. Use the language toggle buttons to switch between English and Thai
-3. Generate a PDF of the completed checklist using the "Generate PDF" button
+4. Open `index.html` in your browser to view the application.
 
-## Technical Details
+## GitHub Pages Deployment
 
-- Pure HTML, CSS, and JavaScript implementation
-- Uses Google Translate API for translations
-- Local storage for language preferences
-- Client-side PDF generation
+The application is automatically deployed to GitHub Pages when changes are pushed to the main branch. The deployment process:
+
+1. Updates the `gh-pages` branch
+2. Serves the content from the root directory
+3. Makes the application available at the GitHub Pages URL
+
+## Dependencies
+
+- jsPDF (PDF generation)
+- html2canvas (HTML to canvas conversion)
+- DOMPurify (Input sanitization)
+- Jest (Testing)
 
 ## Browser Support
 
@@ -42,14 +58,8 @@ git clone https://github.com/yourusername/pump-service-checklist.git
 - Safari
 - Edge
 
-## Contributing
+## Notes
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details
+- Make sure to fill out all required fields before generating PDF
+- For best results, use Chrome browser
+- Enable JavaScript for full functionality
