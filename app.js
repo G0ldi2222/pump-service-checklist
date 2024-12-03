@@ -3,47 +3,46 @@ window.jsPDF = window.jspdf.jsPDF;
 
 // Set current date
 document.addEventListener('DOMContentLoaded', () => {
-    const currentDate = new Date().toLocaleDateString('en-GB');
-    document.getElementById('currentDate').textContent = currentDate;
+    const currentDateElement = document.getElementById('currentDate');
+    if (currentDateElement) {
+        const date = new Date();
+        const options = { 
+            year: 'numeric', 
+            month: '2-digit', 
+            day: '2-digit'
+        };
+        currentDateElement.textContent = date.toLocaleDateString('en-GB', options);
+    }
 });
-
-// Language switching
-function changeLanguage(lang) {
-    const buttons = document.querySelectorAll('.language-btn');
-    buttons.forEach(btn => btn.classList.remove('active'));
-    document.getElementById(`${lang}-btn`).classList.add('active');
-}
 
 // PDF Generation Configuration
 const PDF_CONFIG = {
     format: 'a4',
-    unit: 'mm',
     orientation: 'portrait',
-    margins: {
-        top: 15,
-        right: 15,
-        bottom: 15,
-        left: 15
-    }
+    unit: 'mm',
+    compress: true,
+    hotfixes: ['px_scaling'],
+    precision: 16
 };
 
 // Prepare content for PDF
 function prepareForPDF(element) {
-    // Add PDF generation class
-    document.body.classList.add('generating-pdf');
-    
     // Clone the element to avoid modifying the original
     const clone = element.cloneNode(true);
-    
-    // Apply print-specific styles
-    clone.style.width = '210mm';
-    clone.style.padding = '0';
-    clone.style.margin = '0 auto';
-    clone.style.background = 'white';
     
     // Remove navigation elements
     const navbar = clone.querySelector('.navbar');
     if (navbar) navbar.remove();
+    
+    // Add PDF generation class
+    clone.classList.add('generating-pdf');
+    
+    // Set fixed dimensions
+    clone.style.width = '210mm';
+    clone.style.minHeight = '297mm';
+    clone.style.margin = '0';
+    clone.style.padding = '0';
+    clone.style.background = 'white';
     
     return clone;
 }
@@ -51,20 +50,22 @@ function prepareForPDF(element) {
 // Generate PDF
 async function generatePDF() {
     try {
-        // Store original language
-        const originalLanguage = localStorage.getItem('selectedLanguage');
-        if (originalLanguage !== 'en') {
-            changeLanguage('en');
-            await new Promise(resolve => setTimeout(resolve, 100));
+        // Show loading state
+        document.body.classList.add('generating-pdf');
+        const generateBtn = document.getElementById('generate-pdf-btn');
+        if (generateBtn) {
+            generateBtn.disabled = true;
+            generateBtn.textContent = 'Generating PDF...';
         }
 
         // Get content element
         const content = document.querySelector('.content-wrapper');
-        if (!content) throw new Error('Content not found');
+        if (!content) throw new Error('Content element not found');
 
         // Configure html2canvas
+        const scale = window.devicePixelRatio > 1 ? 2 : 1.5;
         const html2canvasOptions = {
-            scale: 2,
+            scale: scale,
             useCORS: true,
             allowTaint: true,
             scrollY: -window.scrollY,
@@ -75,71 +76,53 @@ async function generatePDF() {
                 if (clonedContent) {
                     prepareForPDF(clonedContent);
                 }
-            }
+            },
+            backgroundColor: 'white'
         };
 
         // Create canvas
         const canvas = await html2canvas(content, html2canvasOptions);
         
         // Calculate dimensions
-        const imgWidth = 210 - (PDF_CONFIG.margins.left + PDF_CONFIG.margins.right);
+        const imgWidth = 210;
         const imgHeight = (canvas.height * imgWidth) / canvas.width;
         
-        // Initialize PDF
+        // Create PDF
         const pdf = new jsPDF({
-            orientation: PDF_CONFIG.orientation,
-            unit: PDF_CONFIG.unit,
-            format: PDF_CONFIG.format,
-            compress: true
+            orientation: imgHeight > imgWidth ? 'portrait' : 'landscape',
+            unit: 'mm',
+            format: 'a4'
         });
 
-        // Add content to PDF
-        let position = PDF_CONFIG.margins.top;
-        const pageHeight = 297 - (PDF_CONFIG.margins.top + PDF_CONFIG.margins.bottom);
-
-        // Add pages
-        while (position < imgHeight) {
-            // Add image
-            pdf.addImage(
-                canvas.toDataURL('image/jpeg', 1.0),
-                'JPEG',
-                PDF_CONFIG.margins.left,
-                position === PDF_CONFIG.margins.top ? PDF_CONFIG.margins.top : -(position - PDF_CONFIG.margins.top),
-                imgWidth,
-                imgHeight,
-                '',
-                'FAST'
-            );
-
-            position += pageHeight;
-
-            // Add new page if needed
-            if (position < imgHeight) {
-                pdf.addPage();
-            }
-        }
+        // Add image to PDF
+        pdf.addImage(
+            canvas.toDataURL('image/jpeg', 1.0),
+            'JPEG',
+            0,
+            0,
+            imgWidth,
+            imgHeight,
+            '',
+            'FAST'
+        );
 
         // Save PDF
-        pdf.save('pump-service-checklist.pdf');
+        const fileName = `Pump-Service-Checklist_${new Date().toISOString().split('T')[0]}.pdf`;
+        pdf.save(fileName);
 
-        // Cleanup
-        document.body.classList.remove('generating-pdf');
-
-        // Restore original language
-        if (originalLanguage !== 'en') {
-            setTimeout(() => changeLanguage(originalLanguage), 500);
-        }
     } catch (error) {
-        console.error('Error generating PDF:', error);
-        alert('Failed to generate PDF. Please check the console for details.');
+        console.error('PDF Generation Error:', error);
+        alert('Error generating PDF. Please try again.');
+    } finally {
+        // Reset UI state
         document.body.classList.remove('generating-pdf');
+        const generateBtn = document.getElementById('generate-pdf-btn');
+        if (generateBtn) {
+            generateBtn.disabled = false;
+            generateBtn.textContent = 'Generate PDF';
+        }
     }
 }
 
-// Attach PDF generation to button
-document.addEventListener('DOMContentLoaded', () => {
-    const generateButton = document.getElementById('generate-pdf-btn');
-    if (generateButton) {
-        generateButton.onclick = generatePDF;
-    }
-}); 
+// Add event listener for PDF generation
+document.getElementById('generate-pdf-btn')?.addEventListener('click', generatePDF); 
